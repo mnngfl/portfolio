@@ -7,17 +7,13 @@ k.loadSprite("character", "/characters.png", {
   sliceY: 9,
   anims: {
     "idle-down": 0,
-    "walk-down-1": { from: 0, to: 1, loop: false, speed: 8 },
-    "walk-down-2": { from: 1, to: 2, loop: true, speed: 8 },
+    "walk-down": { from: 0, to: 2, loop: true, speed: 8 },
     "idle-up": 9,
-    "walk-up-1": { from: 9, to: 10, loop: false, speed: 8 },
-    "walk-up-2": { from: 10, to: 11, loop: true, speed: 8 },
+    "walk-up": { from: 9, to: 11, loop: true, speed: 8 },
     "idle-right": 18,
-    "walk-right-1": { from: 18, to: 19, loop: false, speed: 8 },
-    "walk-right-2": { from: 19, to: 20, loop: true, speed: 8 },
+    "walk-right": { from: 18, to: 20, loop: true, speed: 8 },
     "idle-left": 27,
-    "walk-left-1": { from: 27, to: 28, loop: false, speed: 8 },
-    "walk-left-2": { from: 28, to: 29, loop: true, speed: 8 },
+    "walk-left": { from: 27, to: 29, loop: true, speed: 8 },
   },
 });
 
@@ -30,8 +26,6 @@ k.scene("main", async () => {
   const layers = mapData.layers;
 
   const map = k.add([k.sprite("map"), k.pos(0), k.scale(scaleFactor)]);
-
-  console.log(map);
 
   const player = k.make([
     k.sprite("character", { anim: "idle-down" }),
@@ -67,7 +61,11 @@ k.scene("main", async () => {
             player.isInDialogue = true;
             const key: keyof DialogData = boundary.name;
             const dialogText: string = dialogData[key];
-            displayDialog(dialogText, () => (player.isInDialogue = false));
+            if (dialogText) {
+              displayDialog(dialogText, () => (player.isInDialogue = false));
+            } else {
+              player.isInDialogue = false;
+            }
           });
         }
       }
@@ -114,9 +112,9 @@ k.scene("main", async () => {
     if (
       mouseAngle > lowerBound &&
       mouseAngle < upperBound &&
-      player.curAnim() !== "walk-up-1"
+      player.curAnim() !== "walk-up"
     ) {
-      player.play("walk-up-1");
+      player.play("walk-up");
       player.direction = "up";
       return;
     }
@@ -124,21 +122,21 @@ k.scene("main", async () => {
     if (
       mouseAngle < -lowerBound &&
       mouseAngle > -upperBound &&
-      player.curAnim() !== "walk-down-1"
+      player.curAnim() !== "walk-down"
     ) {
-      player.play("walk-down-1");
+      player.play("walk-down");
       player.direction = "down";
       return;
     }
 
     if (Math.abs(mouseAngle) > upperBound) {
-      if (player.curAnim() !== "walk-right-1") player.play("walk-right-1");
+      if (player.curAnim() !== "walk-right") player.play("walk-right");
       player.direction = "right";
       return;
     }
 
     if (Math.abs(mouseAngle) < lowerBound) {
-      if (player.curAnim() !== "walk-left-1") player.play("walk-left-1");
+      if (player.curAnim() !== "walk-left") player.play("walk-left");
       player.direction = "left";
       return;
     }
