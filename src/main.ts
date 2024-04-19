@@ -1,4 +1,4 @@
-import { DialogData, dialogData, scaleFactor } from "./constants";
+import { DialogData, dialogData, scaleFactor, ShowMark } from "./constants";
 import { k } from "./kaboomCtx";
 import { displayDialog, setCamScale } from "./utils";
 
@@ -14,6 +14,14 @@ k.loadSprite("character", "/characters.png", {
     "walk-right": { from: 18, to: 20, loop: true, speed: 8 },
     "idle-left": 27,
     "walk-left": { from: 27, to: 29, loop: true, speed: 8 },
+  },
+});
+
+k.loadSprite("question-mark", "/characters.png", {
+  sliceX: 9,
+  sliceY: 9,
+  anims: {
+    idle: { from: 43, to: 44, loop: true, speed: 1.5 },
   },
 });
 
@@ -67,6 +75,16 @@ k.scene("main", async () => {
               player.isInDialogue = false;
             }
           });
+
+          if (Object.values(ShowMark).includes(boundary.name)) {
+            const questionMark = k.make([
+              k.sprite("question-mark", { anim: "idle" }),
+              k.pos(boundary.x + 14, boundary.y),
+              k.anchor("center"),
+              `question-mark-${boundary.name}`,
+            ]);
+            map.add(questionMark);
+          }
         }
       }
       continue;
@@ -74,8 +92,6 @@ k.scene("main", async () => {
 
     if (layer.name === "spawnpoints") {
       for (const entity of layer.objects) {
-        console.log(layer, entity);
-
         if (entity.name === "player") {
           player.pos = k.vec2(
             (map.pos.x + entity.x) * scaleFactor,
