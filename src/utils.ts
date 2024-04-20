@@ -19,7 +19,7 @@ export const displayDialog = (text: string, onDisplayEnd: () => void) => {
     }
 
     clearInterval(intervalRef);
-  }, 5);
+  }, 1);
 
   const closeBtn = document.getElementById("close") as HTMLButtonElement;
   const onCloseBtnClick = () => {
@@ -31,6 +31,12 @@ export const displayDialog = (text: string, onDisplayEnd: () => void) => {
   };
 
   closeBtn.addEventListener("click", onCloseBtnClick);
+
+  addEventListener("keyup", (key: KeyboardEvent) => {
+    if (key.code === "Escape" || key.code === "Enter" || key.code === "Space") {
+      closeBtn.click();
+    }
+  });
 };
 
 export const setCamScale = (k: KaboomCtx) => {
