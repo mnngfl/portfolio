@@ -1,6 +1,35 @@
 import { DialogData, dialogData, scaleFactor, ShowMark } from "./constants";
 import { k } from "./kaboomCtx";
-import { displayDialog, setCamScale } from "./utils";
+import {
+  displayCredit,
+  displayDialog,
+  displayManual,
+  setCamScale,
+} from "./utils";
+
+/* Utils */
+displayManual();
+displayCredit();
+
+const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    canvas?.focus();
+  }
+});
+const creditBtn = document.getElementById("credit-btn") as HTMLButtonElement;
+const manualBtn = document.getElementById("manual-btn") as HTMLButtonElement;
+const playClickSound = () => k.play("click");
+creditBtn.addEventListener("click", playClickSound);
+manualBtn.addEventListener("click", playClickSound);
+
+/* Kaboom */
+k.loadSound("click", "/sounds/Click.wav");
+k.loadSound("menuIn", "/sounds/Menu_In.wav");
+k.loadSound("menuOut", "/sounds/Menu_Out.wav");
+k.loadSound("meow", "/sounds/Cat_Meow.wav");
+k.volume(0.5);
+let useSound = true;
 
 k.loadSprite("character", "/characters.png", {
   sliceX: 9,
@@ -68,9 +97,37 @@ k.scene("main", async () => {
           player.onCollide(boundary.name, () => {
             player.isInDialogue = true;
             const key: keyof DialogData = boundary.name;
-            const dialogText: string = dialogData[key];
+            const dialogText: string | null = dialogData[key];
+
+            if (key === "cat") {
+              k.play("meow");
+            } else if (key === "radio") {
+              displayDialog(
+                useSound
+                  ? "효과음을 사용하지 않도록 변경되었습니다."
+                  : "효과음을 사용하도록 변경합니다.",
+                () => {
+                  player.isInDialogue = false;
+                  k.play("menuOut");
+                }
+              );
+              stopAnims();
+              if (useSound) {
+                useSound = false;
+                k.volume(0);
+              } else {
+                useSound = true;
+                k.volume(0.5);
+              }
+            } else {
+              k.play("menuIn");
+            }
+
             if (dialogText) {
-              displayDialog(dialogText, () => (player.isInDialogue = false));
+              displayDialog(dialogText, () => {
+                player.isInDialogue = false;
+                k.play("menuOut");
+              });
               stopAnims();
             } else {
               player.isInDialogue = false;
@@ -112,7 +169,7 @@ k.scene("main", async () => {
   });
 
   k.onUpdate(() => {
-    k.camPos(player.pos.x, player.pos.y - 40);
+    k.camPos(player.pos.x, player.pos.y - 80);
   });
 
   k.onMouseDown((mouseBtn) => {
@@ -263,6 +320,12 @@ k.scene("main", async () => {
       player.move(moveX, moveY);
       return;
     }
+  });
+
+  const uiBtns = document.getElementById("ui-btns") as HTMLDivElement;
+  uiBtns.addEventListener("mouseup", () => {
+    stopAnims();
+    canvas.dispatchEvent(new MouseEvent("mouseup"));
   });
 });
 

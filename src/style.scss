@@ -1,0 +1,276 @@
+@font-face {
+  font-family: DOSGothic;
+  src: url(/DOSGothic.ttf);
+}
+@font-face {
+  font-family: monogram;
+  src: url(/monogram.ttf);
+}
+
+html {
+  touch-action: manipulation;
+}
+
+body {
+  font-family: DOSGothic, monospace;
+  font-size: 1.5rem;
+  word-spacing: 0.2rem;
+  overflow: hidden;
+}
+
+code {
+  font-family: monogram, monospace;
+  font-size: 1.75rem;
+  letter-spacing: 0.1rem;
+  border: 2px solid black;
+  padding: 0 0.3rem 0.1rem 0.5rem;
+  border-radius: 5px;
+  background-color: rgb(217, 248, 196);
+  box-shadow: inset 0.1rem 0.1rem rgb(117, 182, 90);
+  margin-right: 0.3rem;
+  vertical-align: top;
+  &:not(:first-child) {
+    margin-left: 0.15rem;
+  }
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#dialog {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 2vh;
+  min-height: 10vh;
+  background: white;
+  border-radius: 3px;
+  outline-style: solid;
+  padding: 1rem;
+  line-height: 2rem;
+  box-shadow: 0.35rem 0.35rem rgb(117, 182, 90);
+}
+
+a {
+  color: rgb(117, 182, 90);
+  &:visited {
+    color: rgb(139, 172, 15);
+  }
+}
+
+.ui-text {
+  margin: 0;
+  user-select: none;
+}
+
+.btn {
+  font-family: DOSGothic, monospace;
+  border-radius: 5px;
+  border: 3px solid black;
+  font-size: inherit;
+  user-select: none;
+  cursor: pointer;
+}
+
+.ui-info-btn {
+  background-color: rgb(217, 248, 196);
+  color: black;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  &:hover,
+  &.active {
+    color: rgb(217, 248, 196);
+    background-color: rgb(117, 182, 90);
+    box-shadow: inset 0.1rem 0.1rem rgb(38, 87, 62);
+  }
+}
+
+.ui-btn-container {
+  position: absolute;
+  left: 2.5%;
+  top: 3vh;
+}
+
+.ui-close-btn {
+  background-color: rgb(9, 18, 25);
+  color: white;
+}
+
+.btn-container {
+  position: absolute;
+  right: -1rem;
+  top: -1rem;
+}
+
+.note {
+  position: absolute;
+  font-size: 1.25rem;
+  top: 10vh;
+  left: 2.5%;
+  padding: 0.5rem 1rem 0.6rem 1rem;
+  border: 3px solid black;
+  border-radius: 5px;
+  color: black;
+  user-select: none;
+  background-color: white;
+  pointer-events: none;
+  p {
+    line-height: 1.75em;
+    margin: 0.3rem;
+  }
+  &#credit ul {
+    padding: 0 2rem 0.5rem;
+    margin: 0;
+    li {
+      line-height: 1.5rem;
+      font-size: 1.1rem;
+    }
+  }
+  a {
+    pointer-events: all;
+  }
+}
+
+.letter {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin-left: -4px;
+  &:first-child {
+    margin-left: 4px;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-image: url("/letters.png");
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    scale: 2;
+  }
+}
+
+/* Sprite icons */
+$letters-dark: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v,
+  w, x, y, z;
+$letters-light: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v,
+  w, x, y, z;
+$numbers-dark: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, mark;
+$numbers-light: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, mark;
+$keys: top, down, left, right;
+
+@mixin letter-sprite($offset) {
+  $offset: $offset - 1;
+  &::before {
+    background-position: 16px * -$offset top;
+  }
+}
+
+@for $i from 1 through length($letters-dark) {
+  $letter: nth($letters-dark, $i);
+  .letter-dark-#{$letter} {
+    @include letter-sprite($i);
+  }
+}
+
+@for $i from 1 through length($letters-light) {
+  $letter: nth($letters-light, $i);
+  .letter-light-#{$letter} {
+    @include letter-sprite($i);
+    &::before {
+      background-position: 16px * -($i - 1) -16px;
+    }
+  }
+}
+
+@for $i from 1 through length($numbers-dark) {
+  $number: nth($numbers-dark, $i);
+  .number-dark-#{$number} {
+    @include letter-sprite($i);
+    &::before {
+      background-position: 16px * -($i - 1) -48px;
+    }
+  }
+}
+
+@for $i from 1 through length($numbers-light) {
+  $number: nth($numbers-light, $i);
+  .number-light-#{$number} {
+    @include letter-sprite($i);
+    &::before {
+      background-position: 16px * -($i - 1) -64px;
+    }
+  }
+}
+
+@for $i from 1 through length($keys) {
+  $direction: nth($keys, $i);
+  .key-#{$direction} {
+    @include letter-sprite($i);
+    &::before {
+      background-position: 16px * -($i + 5) -32px;
+    }
+  }
+}
+
+/* Media query */
+
+@media (max-width: 992px) {
+  body {
+    font-size: 1.35rem;
+  }
+  code {
+    font-size: 1.4rem;
+  }
+  #dialog {
+    line-height: 1.75rem;
+  }
+  .note {
+    font-size: 1.15rem;
+    padding: 0.75rem 1rem 0.8rem 1rem;
+    p {
+      line-height: 1.6rem;
+    }
+  }
+  .ui-info-btn {
+    font-size: 1.15rem;
+  }
+  .letter {
+    margin-left: -4px;
+    &:first-child {
+      margin-left: 0px;
+    }
+    &::before {
+      scale: 1;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 1.25rem;
+    word-spacing: 0.1rem;
+  }
+  code {
+    font-size: 1.25rem;
+  }
+  #dialog {
+    line-height: 1.6rem;
+  }
+  .note {
+    font-size: 1rem;
+    max-width: 85%;
+    padding: 0.7rem 1rem 0.8rem 1rem;
+    p {
+      line-height: 1.5rem;
+    }
+  }
+  .ui-info-btn {
+    font-size: 1rem;
+  }
+}

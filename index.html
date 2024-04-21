@@ -4,78 +4,96 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2D Portfolio</title>
+    <title>2D World Portfolio by mnngfl</title>
   </head>
   <body>
-    <style>
-      @font-face {
-        font-family: DOSGothic;
-        src: url(DOSGothic.ttf);
-      }
-
-      body {
-        font-family: DOSGothic, monospace;
-        font-size: 1.5rem;
-        overflow: hidden;
-      }
-
-      #app {
-        width: 100%;
-        height: 100%;
-        position: relative;
-      }
-
-      #dialog {
-        position: absolute;
-        left: 10%;
-        right: 10%;
-        bottom: 2vh;
-        min-height: 10vh;
-        background: white;
-        border-radius: 3px;
-        outline-style: solid;
-        padding: 1rem;
-        word-spacing: 0.2rem;
-        line-height: 2rem;
-        filter: drop-shadow(0 0 0.75rem rgb(112, 112, 112));
-      }
-
-      .ui-text {
-        margin: 0;
-        user-select: none;
-      }
-
-      .ui-close-btn {
-        font-family: DOSGothic, monospace;
-        border-radius: 5px;
-        border: 3px solid black;
-        font-size: inherit;
-        user-select: none;
-      }
-
-      .btn-container {
-        position: absolute;
-        right: -1rem;
-        top: -1rem;
-      }
-
-      .note {
-        position: absolute;
-        left: 5%;
-        top: 1vh;
-        display: flex;
-        flex-direction: column;
-        color: rgb(238, 238, 238);
-        user-select: none;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/src/style.scss" />
     <div id="app">
       <div id="ui">
-        <p class="note">Tap/Click around to move</p>
+        <div id="ui-btns" class="ui-btn-container">
+          <button id="manual-btn" class="btn ui-info-btn">조작 방법</button>
+          <button id="credit-btn" class="btn ui-info-btn">크레딧</button>
+        </div>
+        <div id="manual" class="note" style="display: none">
+          <p>터치: 커서 방향으로 이동</p>
+          <p>
+            <span class="letter letter-light-w"></span> 또는
+            <span class="letter key-top"></span>: 위로 이동
+          </p>
+          <p>
+            <span class="letter letter-light-a"></span> 또는
+            <span class="letter key-left"></span>: 왼쪽으로 이동
+          </p>
+          <p>
+            <span class="letter letter-light-s"></span> 또는
+            <span class="letter key-down"></span>: 아래로 이동
+          </p>
+          <p>
+            <span class="letter letter-light-d"></span> 또는
+            <span class="letter key-right"></span>: 오른쪽으로 이동
+          </p>
+          <p>
+            <code>Space</code>,<code>Enter</code>,<code>Esc</code>: 대화창 닫기
+          </p>
+        </div>
+        <div id="credit" class="note" style="display: none">
+          <p>Used assets</p>
+          <ul>
+            <li>
+              World tilesets remastered by MonkeyImage
+              <a
+                href="https://monkeyimage.itch.io/world-tilesets-remastered"
+                target="_blank"
+                >[Link]</a
+              >
+            </li>
+            <li>
+              GB Studio Indoors vy The Pixel Nook
+              <a
+                href="https://the-pixel-nook.itch.io/gb-studio-indoors"
+                target="_blank"
+              >
+                [Link]
+              </a>
+            </li>
+            <li>
+              Optilox's Gameboy Style Asset Pack
+              <a
+                href="https://optilox.itch.io/optiloxs-gameboy-style-asset-pack"
+                target="_blank"
+              >
+                [Link]
+              </a>
+            </li>
+            <li>
+              GB Studio Sprites by Timbo Johnson
+              <a
+                href="https://timbojay.itch.io/gb-studio-sprites"
+                target="_blank"
+              >
+                [Link]
+              </a>
+            </li>
+            <li>
+              Sound Effects Pack For GB Studio by Coffee 'Valen' Bat
+              <a
+                href="https://coffeevalenbat.itch.io/sweet-sounds-sfx-pack"
+                target="_blank"
+                >[Link]</a
+              >
+            </li>
+            <li>
+              DOS Gothic (produced by leedheo) was used as font
+              <a href="https://github.com/hurss/fonts" target="_blank"
+                >[Link]</a
+              >
+            </li>
+          </ul>
+        </div>
         <div id="dialog-container" style="display: none">
           <div id="dialog">
             <div class="btn-container">
-              <button id="close" class="ui-close-btn">&#x2715;</button>
+              <button id="close" class="btn ui-close-btn">&#x2715;</button>
             </div>
             <p id="dialog-text" class="ui-text"></p>
           </div>
