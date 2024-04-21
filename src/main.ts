@@ -71,6 +71,7 @@ k.scene("main", async () => {
             const dialogText: string = dialogData[key];
             if (dialogText) {
               displayDialog(dialogText, () => (player.isInDialogue = false));
+              stopAnims();
             } else {
               player.isInDialogue = false;
             }
@@ -111,11 +112,13 @@ k.scene("main", async () => {
   });
 
   k.onUpdate(() => {
-    k.camPos(player.pos.x, player.pos.y + 10);
+    k.camPos(player.pos.x, player.pos.y - 40);
   });
 
   k.onMouseDown((mouseBtn) => {
-    if (mouseBtn !== "left" || player.isInDialogue) return;
+    if (mouseBtn !== "left" || player.isInDialogue || k.isKeyDown()) {
+      return;
+    }
 
     const worldMousePos = k.toWorld(k.mousePos());
     player.moveTo(worldMousePos, player.speed);
@@ -158,7 +161,7 @@ k.scene("main", async () => {
     }
   });
 
-  k.onMouseRelease(() => {
+  const stopAnims = () => {
     if (player.direction === "down") {
       player.play("idle-down");
     } else if (player.direction === "up") {
@@ -167,6 +170,98 @@ k.scene("main", async () => {
       player.play("idle-left");
     } else if (player.direction === "right") {
       player.play("idle-right");
+    } else {
+      player.play("idle-down");
+    }
+  };
+
+  k.onMouseRelease(() => stopAnims());
+
+  k.onKeyRelease(() => stopAnims());
+
+  k.onKeyDown((key) => {
+    const keyMap = [
+      k.isKeyDown("right") || k.isKeyDown("d"),
+      k.isKeyDown("left") || k.isKeyDown("a"),
+      k.isKeyDown("up") || k.isKeyDown("w"),
+      k.isKeyDown("down") || k.isKeyDown("s"),
+    ];
+
+    if (!["right", "d", "left", "a", "up", "w", "down", "s"].includes(key)) {
+      return;
+    }
+
+    let numOfKeyPressed = 0;
+    for (const key of keyMap) {
+      if (key) {
+        numOfKeyPressed++;
+      }
+    }
+
+    if (numOfKeyPressed > 2 || player.isInDialogue || k.isMouseDown("left")) {
+      return;
+    }
+
+    let moveX = 0;
+    let moveY = 0;
+    if (keyMap[0]) {
+      if (keyMap[2]) {
+        moveX -= player.speed / 2;
+        moveY -= player.speed / 4;
+      } else if (keyMap[3]) {
+        moveX -= player.speed / 2;
+        moveY += player.speed / 4;
+      } else if (keyMap[1]) {
+        return;
+      }
+
+      if (player.curAnim() !== "walk-right") player.play("walk-right");
+      moveX += player.speed;
+      player.direction = "right";
+      player.move(moveX, moveY);
+      return;
+    }
+
+    if (keyMap[1]) {
+      if (keyMap[2]) {
+        moveX += player.speed / 2;
+        moveY -= player.speed / 4;
+      } else if (keyMap[3]) {
+        moveX += player.speed / 2;
+        moveY += player.speed / 4;
+      } else if (keyMap[0]) {
+        return;
+      }
+
+      if (player.curAnim() !== "walk-left") player.play("walk-left");
+      player.direction = "left";
+      moveX -= player.speed;
+      player.move(moveX, moveY);
+      return;
+    }
+
+    if (keyMap[2]) {
+      if (keyMap[3]) {
+        return;
+      }
+
+      if (player.curAnim() !== "walk-up") player.play("walk-up");
+      player.direction = "up";
+      moveY -= player.speed;
+      player.move(moveX, moveY);
+      return;
+    }
+
+    if (keyMap[3]) {
+      if (keyMap[2]) {
+        return;
+      }
+
+      if (player.curAnim() !== "walk-down") player.play("walk-down");
+      player.direction = "down";
+      moveY += player.speed;
+      player.move(moveX, moveY);
+      return;
     }
   });
 });
