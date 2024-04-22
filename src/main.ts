@@ -6,6 +6,13 @@ import {
   displayManual,
   setCamScale,
 } from "./utils";
+import clickSound from "/sounds/Click.wav";
+import menuInSound from "/sounds/Menu_In.wav";
+import menuOutSound from "/sounds/Menu_Out.wav";
+import meowSound from "/sounds/Cat_Meow.wav";
+import characters from "/characters.png";
+import mapImg from "/map.png";
+import mapJson from "/map.json?url";
 
 /* Utils */
 displayManual();
@@ -24,14 +31,14 @@ creditBtn.addEventListener("click", playClickSound);
 manualBtn.addEventListener("click", playClickSound);
 
 /* Kaboom */
-k.loadSound("click", "/sounds/Click.wav");
-k.loadSound("menuIn", "/sounds/Menu_In.wav");
-k.loadSound("menuOut", "/sounds/Menu_Out.wav");
-k.loadSound("meow", "/sounds/Cat_Meow.wav");
+k.loadSound("click", clickSound);
+k.loadSound("menuIn", menuInSound);
+k.loadSound("menuOut", menuOutSound);
+k.loadSound("meow", meowSound);
 k.volume(0.7);
 let useSound = true;
 
-k.loadSprite("character", "/characters.png", {
+k.loadSprite("character", "characters.png", {
   sliceX: 9,
   sliceY: 9,
   anims: {
@@ -46,7 +53,7 @@ k.loadSprite("character", "/characters.png", {
   },
 });
 
-k.loadSprite("question-mark", "/characters.png", {
+k.loadSprite("question-mark", characters, {
   sliceX: 9,
   sliceY: 9,
   anims: {
@@ -54,12 +61,12 @@ k.loadSprite("question-mark", "/characters.png", {
   },
 });
 
-k.loadSprite("map", "/map.png");
+k.loadSprite("map", mapImg);
 
 k.setBackground(k.Color.fromHex("#cadc9f"));
 
 k.scene("main", async () => {
-  const mapData = await fetch("/map.json").then((res) => res.json());
+  const mapData = await fetch(mapJson).then((res) => res.json());
   const layers = mapData.layers;
 
   const map = k.add([k.sprite("map"), k.pos(0), k.scale(scaleFactor)]);
