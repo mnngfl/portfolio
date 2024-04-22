@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "tsc && vite build",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "sass": "^1.75.0",
     "terser": "^5.30.3",
     "typescript": "^5.2.2",
@@ -16,5 +19,6 @@
   },
   "dependencies": {
     "kaboom": "^3000.1.17"
-  }
+  },
+  "homepage": "https://mnngfl.github.io/portfolio"
 }
