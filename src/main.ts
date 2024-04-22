@@ -28,7 +28,7 @@ k.loadSound("click", "/sounds/Click.wav");
 k.loadSound("menuIn", "/sounds/Menu_In.wav");
 k.loadSound("menuOut", "/sounds/Menu_Out.wav");
 k.loadSound("meow", "/sounds/Cat_Meow.wav");
-k.volume(0.5);
+k.volume(0.7);
 let useSound = true;
 
 k.loadSprite("character", "/characters.png", {
@@ -102,9 +102,10 @@ k.scene("main", async () => {
             if (key === "cat") {
               k.play("meow");
             } else if (key === "radio") {
+              player.isInDialogue = true;
               displayDialog(
                 useSound
-                  ? "효과음을 사용하지 않도록 변경되었습니다."
+                  ? "효과음을 사용하지 않도록 변경합니다."
                   : "효과음을 사용하도록 변경합니다.",
                 () => {
                   player.isInDialogue = false;
@@ -117,8 +118,9 @@ k.scene("main", async () => {
                 k.volume(0);
               } else {
                 useSound = true;
-                k.volume(0.5);
+                k.volume(0.7);
               }
+              return;
             } else {
               k.play("menuIn");
             }
