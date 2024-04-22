@@ -16,6 +16,7 @@ body {
   font-size: 1.5rem;
   word-spacing: 0.2rem;
   overflow: hidden;
+  background-color: rgb(217, 248, 196);
 }
 
 code {
@@ -45,13 +46,18 @@ code {
   left: 10%;
   right: 10%;
   bottom: 2vh;
+  padding: 1rem 0;
+  max-height: 92%;
   min-height: 10vh;
   background: white;
   border-radius: 3px;
   outline-style: solid;
-  padding: 1rem;
   line-height: 2rem;
   box-shadow: 0.35rem 0.35rem rgb(117, 182, 90);
+}
+
+#dialog-content {
+  overflow-y: scroll;
 }
 
 a {
@@ -62,6 +68,8 @@ a {
 }
 
 .ui-text {
+  max-height: 40vh;
+  padding: 0 1rem;
   margin: 0;
   user-select: none;
 }

@@ -12,22 +12,66 @@ export const displayDialog = (text: string, onDisplayEnd: () => void) => {
   const dialogUI = document.getElementById(
     "dialog-container"
   ) as HTMLDivElement;
+  const dialogContent = document.getElementById(
+    "dialog-content"
+  ) as HTMLDivElement;
   const dialog = document.getElementById("dialog-text") as HTMLParagraphElement;
-
   dialogUI.style.display = "block";
+
+  const tempEl = document.createElement("div");
+  tempEl.innerHTML = text;
+  const linkEl = tempEl.querySelectorAll("a");
+  let linkTexts: string[] = [];
+  for (const [, el] of linkEl.entries()) {
+    linkTexts.push(el.textContent as string);
+  }
+
+  let replacedText = text;
+  let linkIndices: {
+    startIndex: number;
+    endIndex: number;
+    matchedString: string;
+  }[] = [];
+  const pattern = /<a\b[^>]*>|<\/a>/;
+  let match;
+  while ((match = pattern.exec(replacedText)) !== null) {
+    linkIndices.push({
+      startIndex: match.index,
+      endIndex: match.index + match[0].length,
+      matchedString: match[0],
+    });
+    replacedText = replacedText.replace(pattern, "");
+  }
 
   let index = 0;
   let currentText = "";
   const intervalRef = setInterval(() => {
-    if (index < text.length) {
-      currentText += text[index];
+    if (index < replacedText.length) {
+      if (linkIndices[0]?.startIndex === index) {
+        currentText +=
+          linkIndices[0].matchedString +
+          linkTexts[0] +
+          linkIndices[1].matchedString;
+
+        dialog.innerHTML = currentText;
+        dialogContent.scrollTop = dialogContent.scrollHeight;
+        index += linkTexts[0]?.length;
+        linkIndices.shift();
+        linkIndices.shift();
+        linkTexts.shift();
+        return;
+      } else {
+        currentText += replacedText[index];
+      }
+
       dialog.innerHTML = currentText;
+      dialogContent.scrollTop = dialogContent.scrollHeight;
       index++;
       return;
     }
 
     clearInterval(intervalRef);
-  }, 1);
+  }, 10);
 
   const closeBtn = document.getElementById("close") as HTMLButtonElement;
   const onCloseBtnClick = () => {
