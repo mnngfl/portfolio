@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --base=/portfolio",
     "preview": "vite preview",
-    "predeploy": "tsc && vite build",
+    "predeploy": "tsc && vite build --base=/portfolio",
     "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
