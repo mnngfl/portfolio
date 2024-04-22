@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2D World Portfolio by mnngfl</title>
+    <script type="module" crossorigin src="./assets/index-PzsXj3fW.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CFZgy5C3.css">
+  </head>
+  <body>
+    <div id="app">
+      <div id="ui">
+        <div id="ui-btns" class="ui-btn-container">
+          <button id="manual-btn" class="btn ui-info-btn">조작 방법</button>
+          <button id="credit-btn" class="btn ui-info-btn">크레딧</button>
+        </div>
+        <div id="manual" class="note" style="display: none">
+          <p>터치: 커서 방향으로 이동</p>
+          <p>
+            <span class="letter letter-light-w"></span> 또는
+            <span class="letter key-top"></span>: 위로 이동
+          </p>
+          <p>
+            <span class="letter letter-light-a"></span> 또는
+            <span class="letter key-left"></span>: 왼쪽으로 이동
+          </p>
+          <p>
+            <span class="letter letter-light-s"></span> 또는
+            <span class="letter key-down"></span>: 아래로 이동
+          </p>
+          <p>
+            <span class="letter letter-light-d"></span> 또는
+            <span class="letter key-right"></span>: 오른쪽으로 이동
+          </p>
+          <p>
+            <code>Space</code>,<code>Enter</code>,<code>Esc</code>: 대화창 닫기
+          </p>
+        </div>
+        <div id="credit" class="note" style="display: none">
+          <p>Used assets</p>
+          <ul>
+            <li>
+              World tilesets remastered by MonkeyImage
+              <a
+                href="https://monkeyimage.itch.io/world-tilesets-remastered"
+                target="_blank"
+                >[Link]</a
+              >
+            </li>
+            <li>
+              GB Studio Indoors vy The Pixel Nook
+              <a
+                href="https://the-pixel-nook.itch.io/gb-studio-indoors"
+                target="_blank"
+              >
+                [Link]
+              </a>
+            </li>
+            <li>
+              Optilox's Gameboy Style Asset Pack
+              <a
+                href="https://optilox.itch.io/optiloxs-gameboy-style-asset-pack"
+                target="_blank"
+              >
+                [Link]
+              </a>
+            </li>
+            <li>
+              GB Studio Sprites by Timbo Johnson
+              <a
+                href="https://timbojay.itch.io/gb-studio-sprites"
+                target="_blank"
+              >
+                [Link]
+              </a>
+            </li>
+            <li>
+              Sound Effects Pack For GB Studio by Coffee 'Valen' Bat
+              <a
+                href="https://coffeevalenbat.itch.io/sweet-sounds-sfx-pack"
+                target="_blank"
+                >[Link]</a
+              >
+            </li>
+            <li>
+              DOS Gothic (produced by leedheo) was used as font
+              <a href="https://github.com/hurss/fonts" target="_blank"
+                >[Link]</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div id="dialog-container" style="display: none">
+          <div id="dialog">
+            <div class="btn-container">
+              <button id="close" class="btn ui-close-btn">&#x2715;</button>
+            </div>
+            <div id="dialog-content">
+              <p id="dialog-text" class="ui-text"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <canvas id="canvas"></canvas>
+    </div>
+  </body>
+</html>
