@@ -20,6 +20,7 @@ body {
 }
 
 code {
+  font-weight: lighter;
   font-family: monogram, monospace;
   font-size: 1.75rem;
   letter-spacing: 0.1rem;
@@ -130,12 +131,18 @@ a {
     line-height: 1.75em;
     margin: 0.3rem;
   }
-  &#credit ul {
-    padding: 0 2rem 0.5rem;
-    margin: 0;
-    li {
-      line-height: 1.5rem;
-      font-size: 1.1rem;
+  &#credit {
+    font-weight: bold;
+    ul {
+      padding: 0 2rem 0.5rem;
+      margin: 0;
+      padding-left: 1.5rem;
+      li {
+        font-size: 1.5rem;
+        font-weight: lighter;
+        font-family: monogram, monospace;
+        line-height: 1.5rem;
+      }
     }
   }
   a {
@@ -165,65 +172,65 @@ a {
   }
 }
 
-$letters-dark: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v,
-  w, x, y, z;
-$letters-light: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v,
-  w, x, y, z;
-$numbers-dark: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, mark;
-$numbers-light: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, mark;
+.letter-container {
+  display: inline-block;
+  margin: 0 8px 0 2px;
+}
+
+$letters: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x,
+  y, z;
+$numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, bang;
 $keys: top, down, left, right;
+$bubbles: dollar question devil x ellipsis check bang heart;
 
-@mixin letter-sprite($offset) {
+@mixin letter-sprite($offset, $line) {
   $offset: $offset - 1;
+  $line: $line - 1;
+
   &::before {
-    background-position: 16px * -$offset top;
+    background-position: 16px * -$offset 16px * -$line;
   }
 }
 
-@for $i from 1 through length($letters-dark) {
-  $letter: nth($letters-dark, $i);
+@for $i from 1 through length($letters) {
+  $letter: nth($letters, $i);
   .letter-dark-#{$letter} {
-    @include letter-sprite($i);
+    @include letter-sprite($i, 1);
   }
 }
 
-@for $i from 1 through length($letters-light) {
-  $letter: nth($letters-light, $i);
+@for $i from 1 through length($letters) {
+  $letter: nth($letters, $i);
   .letter-light-#{$letter} {
-    @include letter-sprite($i);
-    &::before {
-      background-position: 16px * -($i - 1) -16px;
-    }
+    @include letter-sprite($i, 2);
   }
 }
 
-@for $i from 1 through length($numbers-dark) {
-  $number: nth($numbers-dark, $i);
+@for $i from 1 through length($numbers) {
+  $number: nth($numbers, $i);
   .number-dark-#{$number} {
-    @include letter-sprite($i);
-    &::before {
-      background-position: 16px * -($i - 1) -48px;
-    }
+    @include letter-sprite($i, 4);
   }
 }
 
-@for $i from 1 through length($numbers-light) {
-  $number: nth($numbers-light, $i);
+@for $i from 1 through length($numbers) {
+  $number: nth($numbers, $i);
   .number-light-#{$number} {
-    @include letter-sprite($i);
-    &::before {
-      background-position: 16px * -($i - 1) -64px;
-    }
+    @include letter-sprite($i, 5);
   }
 }
 
 @for $i from 1 through length($keys) {
   $direction: nth($keys, $i);
   .key-#{$direction} {
-    @include letter-sprite($i);
-    &::before {
-      background-position: 16px * -($i + 5) -32px;
-    }
+    @include letter-sprite($i + 6, 3);
+  }
+}
+
+@for $i from 1 through length($bubbles) {
+  $bubble: nth($bubbles, $i);
+  .bubble-#{$bubble} {
+    @include letter-sprite($i, 6);
   }
 }
 
@@ -254,7 +261,16 @@ $keys: top, down, left, right;
       margin-left: 0px;
     }
     &::before {
-      scale: 1;
+      scale: 2;
+      transform: scale(90%);
+    }
+  }
+  .letter-container {
+    margin: 0 6px 0 4px;
+    & > span {
+      scale: 2;
+      transform: scale(50%);
+      image-rendering: pixelated;
     }
   }
 }
@@ -271,11 +287,14 @@ $keys: top, down, left, right;
     line-height: 1.6rem;
   }
   .note {
-    font-size: 1rem;
+    font-size: 0.95rem;
     max-width: 85%;
     padding: 0.7rem 1rem 0.8rem 1rem;
     p {
       line-height: 1.5rem;
+    }
+    &#credit ul li {
+      font-size: 1.25rem;
     }
   }
   .ui-info-btn {
