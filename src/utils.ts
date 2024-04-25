@@ -32,15 +32,16 @@ export const displayDialog = (text: string, onDisplayEnd: () => void) => {
     endIndex: number;
     matchedString: string;
   }[] = [];
-  const pattern = /<a\b[^>]*>|<\/a>/;
-  let match;
-  while ((match = pattern.exec(replacedText)) !== null) {
+  const linkPattern = /<a\b[^>]*>|<\/a>/;
+
+  let linkMatch;
+  while ((linkMatch = linkPattern.exec(replacedText)) !== null) {
     linkIndices.push({
-      startIndex: match.index,
-      endIndex: match.index + match[0].length,
-      matchedString: match[0],
+      startIndex: linkMatch.index,
+      endIndex: linkMatch.index + linkMatch[0].length,
+      matchedString: linkMatch[0],
     });
-    replacedText = replacedText.replace(pattern, "");
+    replacedText = replacedText.replace(linkPattern, "");
   }
 
   let index = 0;
