@@ -34,8 +34,8 @@ code {
   margin-right: 0.3rem;
   vertical-align: top;
   text-wrap: nowrap;
-  &:not(:first-child) {
-    margin-left: 0.15rem;
+  &:not(:first-of-type) {
+    margin-left: -0.5rem;
   }
 }
 
@@ -162,6 +162,7 @@ a {
   width: 16px;
   height: 16px;
   display: inline-block;
+  margin-right: 4px;
   margin-left: -4px;
   &:first-child {
     margin-left: 4px;

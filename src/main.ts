@@ -10,6 +10,7 @@ import clickSound from "/sounds/Click.wav";
 import menuInSound from "/sounds/Menu_In.wav";
 import menuOutSound from "/sounds/Menu_Out.wav";
 import meowSound from "/sounds/Cat_Meow.wav";
+import bumpSound from "/sounds/Bump.wav";
 import characters from "/characters.png";
 import mapImg from "/map.png";
 import mapJson from "/map.json?url";
@@ -35,8 +36,12 @@ k.loadSound("click", clickSound);
 k.loadSound("menuIn", menuInSound);
 k.loadSound("menuOut", menuOutSound);
 k.loadSound("meow", meowSound);
+k.loadSound("bump", bumpSound);
 k.volume(0.7);
 let useSound = true;
+
+k.loadShaderURL("light", undefined, "shaders/light.frag");
+let lightOn = true;
 
 k.loadSprite("character", "characters.png", {
   sliceX: 9,
@@ -126,6 +131,33 @@ k.scene("main", async () => {
               } else {
                 useSound = true;
                 k.volume(0.7);
+              }
+              return;
+            } else if (key === "light") {
+              player.isInDialogue = true;
+              displayDialog(
+                lightOn ? "방의 조명을 끕니다." : "방의 조명을 켭니다.",
+                () => {
+                  player.isInDialogue = false;
+                  k.play("bump");
+                }
+              );
+              stopAnims();
+              k.play("bump");
+              if (lightOn) {
+                lightOn = false;
+                k.usePostEffect("light", () => ({
+                  u_radius: 64,
+                  u_blur: 64,
+                  u_resolution: k.vec2(k.width(), k.height()),
+                  u_pos: k.vec2(
+                    k.center().x,
+                    k.center().y + k.camScale().y * 80
+                  ),
+                }));
+              } else {
+                lightOn = true;
+                k.usePostEffect("");
               }
               return;
             } else {
