@@ -1,5 +1,7 @@
 ## Developer portfolio that's a 2D game
 
+<img src="https://github.com/mnngfl/portfolio/assets/47686322/187ee6bd-85f8-48db-9b9b-1b0b3c0b75e8" alt="preview-img" width="500" />
+
 Live Demo: https://mnngfl.github.io/portfolio
 
 ### How to run
