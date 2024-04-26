@@ -1,6 +1,7 @@
 @font-face {
-  font-family: DOSGothic;
-  src: url(/DOSGothic.ttf);
+  font-family: PFStardust;
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff")
+    format("woff");
 }
 @font-face {
   font-family: monogram;
@@ -12,8 +13,9 @@ html {
 }
 
 body {
-  font-family: DOSGothic, monospace;
-  font-size: 1.5rem;
+  font-family: PFStardust, monospace;
+  line-height: 1rem;
+  font-size: 1.4rem;
   word-spacing: 0.2rem;
   overflow: hidden;
   background-color: rgb(217, 248, 196);
@@ -77,10 +79,12 @@ a {
 }
 
 .btn {
-  font-family: DOSGothic, monospace;
+  font-family: monogram, monospace;
+  letter-spacing: 0.1rem;
   border-radius: 5px;
   border: 3px solid black;
   font-size: inherit;
+  font-weight: bold;
   user-select: none;
   cursor: pointer;
 }
@@ -132,16 +136,18 @@ a {
     margin: 0.3rem;
   }
   &#credit {
-    font-weight: bold;
+    font-weight: lighter;
+    font-family: monogram, monospace;
+    font-size: 1.75rem;
+    p {
+      line-height: 1.5rem;
+    }
     ul {
       padding: 0 2rem 0.5rem;
       margin: 0;
       padding-left: 1.5rem;
       li {
-        font-size: 1.5rem;
-        font-weight: lighter;
-        font-family: monogram, monospace;
-        line-height: 1.5rem;
+        line-height: 1.75rem;
       }
     }
   }
@@ -170,11 +176,6 @@ a {
     image-rendering: pixelated;
     scale: 2;
   }
-}
-
-.letter-container {
-  display: inline-block;
-  margin: 0 8px 0 2px;
 }
 
 $letters: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x,
@@ -237,7 +238,7 @@ $bubbles: dollar question devil x ellipsis check bang heart;
 /* Media query */
 @media (max-width: 992px) {
   body {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
   }
   code {
     font-size: 1.4rem;
@@ -257,27 +258,16 @@ $bubbles: dollar question devil x ellipsis check bang heart;
   }
   .letter {
     margin-left: -4px;
-    &:first-child {
-      margin-left: 0px;
-    }
     &::before {
       scale: 2;
       transform: scale(90%);
-    }
-  }
-  .letter-container {
-    margin: 0 6px 0 4px;
-    & > span {
-      scale: 2;
-      transform: scale(50%);
-      image-rendering: pixelated;
     }
   }
 }
 
 @media (max-width: 768px) {
   body {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     word-spacing: 0.1rem;
   }
   code {
@@ -293,8 +283,8 @@ $bubbles: dollar question devil x ellipsis check bang heart;
     p {
       line-height: 1.5rem;
     }
-    &#credit ul li {
-      font-size: 1.25rem;
+    &#credit {
+      font-size: 1.35rem;
     }
   }
   .ui-info-btn {
