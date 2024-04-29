@@ -43,7 +43,7 @@ let useSound = true;
 k.loadShaderURL("light", undefined, "shaders/light.frag");
 let lightOn = true;
 
-k.loadSprite("character", "characters.png", {
+k.loadSprite("character", characters, {
   sliceX: 9,
   sliceY: 9,
   anims: {
@@ -197,7 +197,6 @@ k.scene("main", async () => {
             (map.pos.y + entity.y) * scaleFactor
           );
           k.add(player);
-          continue;
         }
       }
     }

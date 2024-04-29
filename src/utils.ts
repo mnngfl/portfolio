@@ -48,31 +48,26 @@ export const displayDialog = (text: string, onDisplayEnd: () => void) => {
   let currentText = "";
   const intervalRef = setInterval(() => {
     if (index < replacedText.length) {
+      let increaseIndex = 1;
+
       if (linkIndices[0]?.startIndex === index) {
         currentText +=
           linkIndices[0].matchedString +
           linkTexts[0] +
           linkIndices[1].matchedString;
-
-        dialog.innerHTML = currentText;
-        dialogContent.scrollTop = dialogContent.scrollHeight;
-        index += linkTexts[0]?.length;
+        increaseIndex = linkTexts[0].length;
         linkIndices.shift();
         linkIndices.shift();
         linkTexts.shift();
-        return;
       } else {
         currentText += replacedText[index];
       }
 
       dialog.innerHTML = currentText;
       dialogContent.scrollTop = dialogContent.scrollHeight;
-      index++;
-      return;
+      index += increaseIndex;
     }
-
-    clearInterval(intervalRef);
-  }, 10);
+  }, 5);
 
   const closeBtn = document.getElementById("close") as HTMLButtonElement;
   const onCloseBtnClick = () => {
@@ -106,21 +101,23 @@ export const setCamScale = (k: KaboomCtx) => {
 
 export const displayManual = () => {
   const toggleUI = () => {
+    canvas.focus();
+
     if (SHOW_MANUAL) {
       SHOW_MANUAL = false;
       manualUI.style.display = "none";
       manualBtn.classList.remove("active");
-    } else {
-      SHOW_MANUAL = true;
-      manualUI.style.display = "block";
-      manualBtn.classList.add("active");
-      if (SHOW_CREDIT) {
-        SHOW_CREDIT = false;
-        creditUI.style.display = "none";
-        creditBtn.classList.remove("active");
-      }
+      return;
     }
-    canvas.focus();
+
+    SHOW_MANUAL = true;
+    manualUI.style.display = "block";
+    manualBtn.classList.add("active");
+    if (SHOW_CREDIT) {
+      SHOW_CREDIT = false;
+      creditUI.style.display = "none";
+      creditBtn.classList.remove("active");
+    }
   };
 
   manualBtn.addEventListener("click", toggleUI);
@@ -128,22 +125,23 @@ export const displayManual = () => {
 
 export const displayCredit = () => {
   const toggleUI = () => {
+    canvas.focus();
+
     if (SHOW_CREDIT) {
       SHOW_CREDIT = false;
       creditUI.style.display = "none";
       creditBtn.classList.remove("active");
-    } else {
-      SHOW_CREDIT = true;
-      creditUI.style.display = "block";
-      creditBtn.classList.add("active");
-      if (SHOW_MANUAL) {
-        SHOW_MANUAL = false;
-        manualUI.style.display = "none";
-        manualBtn.classList.remove("active");
-      }
+      return;
     }
 
-    canvas.focus();
+    SHOW_CREDIT = true;
+    creditUI.style.display = "block";
+    creditBtn.classList.add("active");
+    if (SHOW_MANUAL) {
+      SHOW_MANUAL = false;
+      manualUI.style.display = "none";
+      manualBtn.classList.remove("active");
+    }
   };
 
   creditBtn.addEventListener("click", toggleUI);
