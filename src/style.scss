@@ -1,11 +1,10 @@
 @font-face {
-  font-family: PFStardust;
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff")
-    format("woff");
+  font-family: GalmuriMono11;
+  src: url("/fonts/GalmuriMono11.woff2");
 }
 @font-face {
   font-family: monogram;
-  src: url(/monogram.ttf);
+  src: url("/fonts/monogram.ttf");
 }
 
 html {
@@ -13,7 +12,7 @@ html {
 }
 
 body {
-  font-family: PFStardust, monospace;
+  font-family: GalmuriMono11, monospace;
   line-height: 1rem;
   font-size: 1.4rem;
   word-spacing: 0.2rem;
@@ -157,6 +156,14 @@ a {
 }
 
 /* Sprite icons */
+#ui::after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -1;
+  content: url("/letters.png");
+}
 .letter {
   position: relative;
   width: 16px;
@@ -285,7 +292,7 @@ $bubbles: dollar question devil x ellipsis check bang heart;
       line-height: 1.5rem;
     }
     &#credit {
-      font-size: 1.35rem;
+      font-size: 1.6rem;
     }
   }
   .ui-info-btn {
