@@ -1,12 +1,3 @@
-@font-face {
-  font-family: GalmuriMono11;
-  src: url("/fonts/GalmuriMono11.woff2");
-}
-@font-face {
-  font-family: monogram;
-  src: url("/fonts/monogram.ttf");
-}
-
 html {
   touch-action: manipulation;
 }
@@ -155,15 +146,6 @@ a {
   }
 }
 
-/* Sprite icons */
-#ui::after {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  z-index: -1;
-  content: url("/letters.png");
-}
 .letter {
   position: relative;
   width: 16px;
